@@ -391,6 +391,44 @@ Rules:
 
 ---
 
+## 4.7 E2E Test Builder Skill
+
+Reference file:
+
+```txt
+skills/e2e-test-builder.md
+```
+
+Use after implementing a milestone and before QA / Code Review sign-off.
+
+Examples:
+
+- API e2e tests for new or changed routes (Supertest/Vitest against Hono)
+- Mobile e2e flows for new or changed screens (Maestro)
+- Auth boundary and user data isolation checks
+- Golden-path coverage for the milestone's acceptance criteria
+
+---
+
+## 4.8 Skill Sync Reviewer Skill
+
+Reference file:
+
+```txt
+skills/skill-sync-reviewer.md
+```
+
+Use after Review/Fix and before Approve, at the end of every milestone.
+
+Examples:
+
+- Updating a "preferred structure" example that changed during implementation
+- Correcting a rule that turned out to be wrong or incomplete
+- Recording a new reusable pattern for future milestones to follow
+- Keeping `agents/` and `skills/` docs accurate as the source of truth
+
+---
+
 ## 5. Milestone Workflow
 
 Reference files:
@@ -414,8 +452,12 @@ Milestones:
 Each milestone should follow this loop:
 
 ```txt
-Plan -> Implement -> Review -> Fix -> Approve -> Next milestone
+Plan -> Implement -> E2E Test -> Review -> Fix -> Skill Sync -> Approve -> Next milestone
 ```
+
+Write or update e2e tests (see `skills/e2e-test-builder.md`) right after implementation, before handing off to QA / Code Review. E2E tests give the reviewer real evidence that the milestone's acceptance criteria work end to end.
+
+After Review/Fix, run the Skill Sync Reviewer (see `skills/skill-sync-reviewer.md`) to check whether the milestone's actual implementation changed anything the `agents/` or `skills/` docs assumed, and update those docs before approving. This keeps future milestones planned against accurate instructions instead of stale ones.
 
 Do not start a new milestone until the current one passes review.
 
@@ -435,6 +477,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/react-native-mvp-builder.md
 skills/hono-backend-mvp-builder.md
 prompts/milestone-1-claude-code-prompt.md
@@ -455,6 +499,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/react-native-mvp-builder.md
 skills/hono-backend-mvp-builder.md
 skills/expense-budget-domain.md
@@ -473,6 +519,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/react-native-mvp-builder.md
 skills/hono-backend-mvp-builder.md
 skills/expense-budget-domain.md
@@ -491,6 +539,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/hono-backend-mvp-builder.md
 skills/expense-budget-domain.md
 ```
@@ -508,6 +558,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/react-native-mvp-builder.md
 skills/hono-backend-mvp-builder.md
 skills/expense-budget-domain.md
@@ -527,6 +579,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/hono-backend-mvp-builder.md
 skills/dashboard-insights.md
 ```
@@ -544,6 +598,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/react-native-mvp-builder.md
 skills/hono-backend-mvp-builder.md
 skills/money-chat.md
@@ -562,6 +618,8 @@ agents/backend-engineer.md
 agents/react-native-engineer.md
 agents/qa-code-reviewer.md
 skills/claude-code-milestone-workflow.md
+skills/e2e-test-builder.md
+skills/skill-sync-reviewer.md
 skills/hono-backend-mvp-builder.md
 skills/dashboard-insights.md
 ```

@@ -64,9 +64,10 @@ apps/api
 The `requireAuth` middleware should:
 
 1. Read bearer token.
-2. Verify Supabase JWT.
-3. Attach authenticated user ID to Hono context.
-4. Reject invalid or missing token with 401.
+2. Verify Supabase JWT by calling `supabaseAdmin.auth.getUser(token)` (service-role client) rather than manually decoding/verifying the JWT.
+3. Upsert the local `User` row (`id`, `email`) so it stays in sync with Supabase Auth. There is no separate signup webhook — the local `User` row is created lazily on a user's first authenticated request.
+4. Attach authenticated user ID to Hono context.
+5. Reject invalid or missing token with 401.
 
 Unauthorized response:
 

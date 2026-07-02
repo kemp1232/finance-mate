@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Finance Mate",
+    "slug": "finance-mate",
+    "scheme": "financemate",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "tech.firstmate.financemate"
+    },
+    "android": {
+      "package": "tech.firstmate.financemate"
+    },
+    "plugins": ["expo-router"],
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    }
+  }
+}

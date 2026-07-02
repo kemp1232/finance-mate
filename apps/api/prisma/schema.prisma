@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Mirrors the Supabase Auth user (auth.users.id). Rows are created lazily
+// on first authenticated request via upsert in requireAuth middleware.
+model User {
+  id        String   @id
+  email     String   @unique
+  createdAt DateTime @default(now())
+
+  expenses       Expense[]
+  budgets        Budget[]
+  categoryRules  CategoryRule[]
+  chatMessages   ChatMessage[]
+  insights       SpendingInsight[]
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  isSystem  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  expenses      Expense[]
+  budgets       Budget[]
+  categoryRules CategoryRule[]
+}
+
+// Full expense fields are introduced in Milestone 2. The model exists now
+// only so the schema/migration is stable; no expense routes are built yet.
+model Expense {
+  id         String   @id @default(uuid())
+  userId     String
+  categoryId String
+  amount     Decimal  @db.Decimal(12, 2)
+  merchant   String
+  date       DateTime
+  notes      String?
+  source     String   @default("MANUAL")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@index([userId])
+}
+
+// Introduced ahead of Milestone 5. Not exposed via any route in Milestone 1.
+model Budget {
+  id         String   @id @default(uuid())
+  userId     String
+  categoryId String
+  month      String
+  amount     Decimal  @db.Decimal(12, 2)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([userId, categoryId, month])
+  @@index([userId])
+}
+
+// Introduced ahead of Milestone 4. Not exposed via any route in Milestone 1.
+model CategoryRule {
+  id         String   @id @default(uuid())
+  userId     String
+  merchant   String
+  categoryId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [categoryId], references: [id])
+
+  @@unique([userId, merchant])
+  @@index([userId])
+}
+
+// Introduced ahead of Milestone 7. Not exposed via any route in Milestone 1.
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  role      String
+  content   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Introduced ahead of Milestone 6. Not exposed via any route in Milestone 1.
+model SpendingInsight {
+  id        String   @id @default(uuid())
+  userId    String
+  severity  String
+  message   String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

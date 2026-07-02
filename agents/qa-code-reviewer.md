@@ -31,6 +31,8 @@ For every milestone, check:
 - Did the agent avoid building future milestone features?
 - Are secrets kept out of mobile code?
 - Is AI output validated before use?
+- Were e2e tests added or updated for this milestone (see `skills/e2e-test-builder.md`)?
+- Do the e2e tests cover the golden path, auth boundary, and data isolation?
 
 ## Output Format
 
