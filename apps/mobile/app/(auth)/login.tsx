@@ -23,9 +23,14 @@ export default function LoginScreen() {
   const onSubmit = async (values: LoginFormValues) => {
     setFormError(null);
     setIsSubmitting(true);
-    const { error } = await signIn(values.email, values.password);
-    setIsSubmitting(false);
-    if (error) setFormError(error);
+    try {
+      const { error } = await signIn(values.email, values.password);
+      if (error) setFormError(error);
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

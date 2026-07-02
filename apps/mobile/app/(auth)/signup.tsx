@@ -24,12 +24,17 @@ export default function SignupScreen() {
   const onSubmit = async (values: SignupFormValues) => {
     setFormError(null);
     setIsSubmitting(true);
-    const { error } = await signUp(values.email, values.password);
-    setIsSubmitting(false);
-    if (error) {
-      setFormError(error);
-    } else {
-      setConfirmationSent(true);
+    try {
+      const { error } = await signUp(values.email, values.password);
+      if (error) {
+        setFormError(error);
+      } else {
+        setConfirmationSent(true);
+      }
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

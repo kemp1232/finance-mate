@@ -24,12 +24,17 @@ export default function ForgotPasswordScreen() {
   const onSubmit = async (values: ForgotPasswordFormValues) => {
     setFormError(null);
     setIsSubmitting(true);
-    const { error } = await resetPassword(values.email);
-    setIsSubmitting(false);
-    if (error) {
-      setFormError(error);
-    } else {
-      setEmailSent(true);
+    try {
+      const { error } = await resetPassword(values.email);
+      if (error) {
+        setFormError(error);
+      } else {
+        setEmailSent(true);
+      }
+    } catch (err) {
+      setFormError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
